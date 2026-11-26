@@ -12,6 +12,8 @@ There is no catalogue to import or maintain. No cloud upload. No external servic
 
 Your photos stay where they are, and everything runs locally on your machine.
 
+![Screen Recording of the Tool](files/photo-keyward.gif)
+
 ## Contents
 
 - [Vibe coded](#vibe-coded)
