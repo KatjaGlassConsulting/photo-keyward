@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+
+# uv
+.uv/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Claude Code local state
+.claude/
+.superpowers/
+
+# Sample data (not part of the app)
+examples
+notes.md
+
+# Local environment configuration (see .env.example)
+.env
