@@ -11,7 +11,7 @@ authors = [
 ]
 keywords = ["photos", "exif", "iptc", "xmp", "keywords", "metadata", "exiftool"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Environment :: X11 Applications :: Qt",
     "Intended Audience :: End Users/Desktop",
     "Operating System :: Microsoft :: Windows",

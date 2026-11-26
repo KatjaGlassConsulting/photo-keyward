@@ -23,6 +23,7 @@ Your photos stay where they are, and everything runs locally on your machine.
   - [Configuration](#configuration)
 - [Features](#features)
   - [Layout](#layout)
+  - [Supported formats](#supported-formats)
   - [Tagging with keywords](#tagging-with-keywords)
   - [The keyword vocabulary](#the-keyword-vocabulary)
   - [Managing keywords](#managing-keywords)
@@ -31,32 +32,27 @@ Your photos stay where they are, and everything runs locally on your machine.
   - [Trash](#trash)
   - [Scripts](#scripts)
 - [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Vibe coded
 
 This project is vibe coded, and the acknowledgment matters more than the
-label. The application code, the console scripts, the specifications and plans
-under `docs/superpowers/`, and this README were all written by
-[Claude](https://www.anthropic.com/claude) through
+label. The application code, the console scripts and this README were all
+written by [Claude](https://www.anthropic.com/claude) through
 [Claude Code](https://claude.com/claude-code), working from prompts rather than
 from a human writing the lines. Verification throughout has been manual:
 running the app against real photo folders and checking the result on screen.
 
 What that means if you are thinking of using it:
 
-- **There are no automated tests and no CI.** Every plan document under
-  `docs/` records the same decision. Nothing here is covered by a test suite.
+- **There are no automated tests and no CI.** Nothing here is covered by a
+  test suite.
 - **It modifies your files in place.** The **Scripts** menu and the keyword
   panel write EXIF into your images through exiftool, and `Del` moves files
   into a `trash` folder. Work on a copy of anything you care about.
 - **Read the code before you rely on it.** No human has line-by-line reviewed
   all of it.
-
-The upside of the same process is that the reasoning is unusually well
-documented. The nine plans and ten specifications under `docs/superpowers/`
-record what each feature was meant to do and why, and are a better guide to the
-intended behaviour than the code alone.
 
 ## Setup
 
@@ -129,6 +125,8 @@ exiftool -ver
 ### Run
 
 ```powershell
+git clone https://github.com/KatjaGlassConsulting/photo-keyward.git
+cd photo-keyward
 uv sync
 uv run keyward
 ```
@@ -159,7 +157,7 @@ A few details worth knowing:
 - Resolution order is `EXIFTOOL_PATH`, then `exiftool` on `PATH`, then the
   usual Windows install folders under *Program Files* and *LocalAppData*.
 - A real environment variable beats the `.env` entry, which lets you override
-  the checked-out value for a single shell or a CI run.
+  the checked-out value for a single shell session.
 - A path that does not exist is ignored rather than fatal, so a stale `.env`
   still leaves a working `PATH` installation usable.
 - Do not quote the value. `~` and environment variables in it are expanded.
@@ -181,6 +179,13 @@ What the app does once it is running.
 - **Status bar:** how many images the folder holds - `120 images`, or
   `42 of 120 images` while the **Keys** filter is hiding some, or
   `3 of 120 selected` once you pick images out.
+
+### Supported formats
+
+The grid shows `.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff`, `.gif` and `.bmp`
+files sitting directly in the open folder - subfolders are not included. RAW
+files such as `.orf` are not displayed, but a `.orf` or `.xmp` sidecar with the
+same name as a JPG moves with it into and out of the trash.
 
 ### Tagging with keywords
 
@@ -207,10 +212,10 @@ folder in one step. A name that already exists flashes the box red rather than
 creating a duplicate.
 
 Use `|` to build a hierarchy. `Travel|Egypt|2025` is one keyword, displayed as
-*Reise ▸ Egypt ▸ 2025* in italics to set it apart from flat ones. Hierarchical
+*Travel ▸ Egypt ▸ 2025* in italics to set it apart from flat ones. Hierarchical
 keywords are written to `XMP-lr:HierarchicalSubject`; flat ones to
 `IPTC:Keywords` and `XMP:Subject`. They are separate tags, so `Egypt` and
-`Reise|Egypt|2025` are two different keywords that can both be applied to the
+`Travel|Egypt|2025` are two different keywords that can both be applied to the
 same image.
 
 Keywords are listed alphabetically, with accents folded so `Ägypten` sorts under
@@ -384,7 +389,7 @@ German, French, Spanish and the rest of Western Europe round-trip correctly.
 Greek, Cyrillic, Japanese and similar survive in the XMP tag but degrade to `?`
 in `IPTC:Keywords`, which is a Latin-1 field unless a file declares otherwise.
 Making the app declare UTF-8 there would re-encode keywords already present in
-your images - turning an existing `Egypt` into `?gypten` that can no longer be
+your images - turning an existing `Ägypten` into `?gypten` that can no longer be
 removed - so it deliberately does not. Nothing already in your files is changed
 by this; only characters outside Latin-1 are affected, and only in the IPTC tag.
 
@@ -393,6 +398,13 @@ Only `.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff`, `.gif` and `.bmp` are displayed,
 and only those sitting directly in the folder - nothing recurses into
 subfolders. RAW files such as `.orf` are never shown, though they do follow
 their matching JPG into the trash.
+
+## Contributing
+
+Bug reports, ideas and questions are welcome as
+[GitHub issues](https://github.com/KatjaGlassConsulting/photo-keyward/issues),
+and pull requests are welcome too. For anything larger than a small fix, open an
+issue first so the change can be discussed before you put time into it.
 
 ## License
 
